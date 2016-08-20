@@ -1,13 +1,13 @@
 package encryption;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 /**
  * Generator a secret key for
  * use in the encryption module.
  */
 public class KeyGen {
+
+    /** Pre-defined salt for using with cipher generations.*/
+    private final static byte[] PRE_DEF_SALT = "KqxmrXcIOkJSET1NNkpt".getBytes();
 
     /**
      * Generate a secret key for use in encryption and decryption.
@@ -29,9 +29,9 @@ public class KeyGen {
      * @throws Exception if salt generation failed.
      */
     private static byte[] generateSalt(int size) throws Exception{
-        Random random = new SecureRandom();
         byte[] salt = new byte[size];
-        random.nextBytes(salt);
+        /*Copy from the Pre-defined salt*/
+        System.arraycopy(PRE_DEF_SALT, 0, salt, 0, size);
         return salt;
     }
 

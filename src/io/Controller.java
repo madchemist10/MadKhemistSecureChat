@@ -1,5 +1,6 @@
 package io;
 
+import connection.Portal;
 import constants.Constants;
 
 /**
@@ -32,6 +33,16 @@ public class Controller {
         this.parser = new Parser(this);
         this.framer = new Framer(this);
         this.portal = new Portal(this);
+    }
+
+    /**
+     * Shutdown this controller by shutting
+     * down each of the portal, parser, and framer.
+     */
+    public void shutdown(){
+        this.portal.shutdown();
+        this.framer.shutdown();
+        this.parser.shutdown();
     }
 
     /**
@@ -72,7 +83,7 @@ public class Controller {
         String messageType = message.getMessageType();
         switch(messageType){
             case Constants.DATA_MESSAGE:
-                System.out.println(message.getMessage());
+                displayMessageToUser(message.getMessage());
                 break;
         }
     }
@@ -99,5 +110,13 @@ public class Controller {
      */
     public byte[] getInitialValue() {
         return initialValue;
+    }
+
+    /**
+     * Display a message to the user.
+     * @param message message to show the user.
+     */
+    public void displayMessageToUser(String message){
+        System.out.println("Received>> "+message);
     }
 }
