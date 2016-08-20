@@ -2,11 +2,10 @@ package io;
 
 import encryption.AES;
 import encryption.Base64code;
-import org.apache.commons.codec.digest.DigestUtils;
+import utility.UtilityClass;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
-import java.util.zip.Checksum;
 
 /**
  * Responsible for parsing the data as it enters
@@ -52,7 +51,7 @@ public class Parser {
         }
 
         byte[] messageContents = checksumMessage.getEncodedBytes();
-        if(!checksumMessage.getCheckSum().equals(computeCheckSum(messageContents))){
+        if(!checksumMessage.getCheckSum().equals(UtilityClass.computeCheckSum(messageContents))){
             System.err.println("Check sums do not match.");
             return;
         }
@@ -108,24 +107,6 @@ public class Parser {
             System.out.println(e.getClass().getName()+": "+e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * Compute a sha1Hex checksum for the given message.
-     * @param message message to compute checksum for.
-     * @return String representation of the hex string checksum.
-     */
-    public static String computeCheckSum(String message){
-        return DigestUtils.sha1Hex(message);
-    }
-
-    /**
-     * Compute a sha1Hex checksum for the given message.
-     * @param message message to compute checksum for.
-     * @return String representation of the hex string checksum.
-     */
-    public static String computeCheckSum(byte[] message){
-        return DigestUtils.sha1Hex(message);
     }
 
 }

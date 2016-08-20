@@ -2,6 +2,7 @@ package io;
 
 import connection.Portal;
 import constants.Constants;
+import gui.MainFrame;
 
 /**
  * Responsible for maintaining the in and out of bytes
@@ -19,6 +20,8 @@ public class Controller {
     private final Portal portal;
     /**Reference to the framer created by this controller.*/
     private final Framer framer;
+    /**Reference to main frame so that incoming data can be displayed.*/
+    private final MainFrame frame;
 
     /**
      * Create a new controller for this application.
@@ -27,12 +30,13 @@ public class Controller {
      * @param initialValue byte[] of the initial value for the cipher.
      *                     Must be 16 bytes.
      */
-    public Controller(byte[] userKey, byte[] initialValue){
+    public Controller(byte[] userKey, byte[] initialValue, MainFrame frame){
         this.userKey = userKey;
         this.initialValue = initialValue;
         this.parser = new Parser(this);
         this.framer = new Framer(this);
         this.portal = new Portal(this);
+        this.frame = frame;
     }
 
     /**
@@ -117,6 +121,7 @@ public class Controller {
      * @param message message to show the user.
      */
     public void displayMessageToUser(String message){
+        frame.getUserDialog().addDataToConversation("Received>> "+message);
         System.out.println("Received>> "+message);
     }
 }

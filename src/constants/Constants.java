@@ -29,4 +29,20 @@ public interface Constants {
 
     /** Maximum time to wait on polling for outgoing data.*/
     int MAX_OUT_POLL_TIME = 500;
+
+    /*GUI Labels and Fields*/
+    String CONVERSATION_AREA_WELCOME = "Welcome to MadKhemist Secure Chat!\n";
+    String IN_BOUND_PORT_LABEL = "Receive Port >> ";
+    String OUT_BOUND_PORT_LABEL = "Send Port >> ";
+    String IP_ADDRESS_LABEL = "IP Address >>";
+    String DONE = "Done!";
+    int FRAME_WIDTH = 500;
+    int FRAME_HEIGHT = 500;
+    int CONNECT_WIDTH = 200;
+    int CONNECT_HEIGHT = 200;
+    int CONVERSATION_WIDTH = 300;
+    int CONVERSATION_HEIGHT = 250;
+
+    String CONNECT_PANEL = "CONNECT_PANEL";
+    String USER_PANEL = "USER_PANEL";
 }

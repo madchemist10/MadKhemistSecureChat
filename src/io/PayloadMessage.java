@@ -1,6 +1,8 @@
 package io;
 
 /**
+ * Wrapper around abstract class of Message.
+ * Allows for future implementation and scaling.
  */
 public class PayloadMessage extends Message{
     /**

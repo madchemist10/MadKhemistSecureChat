@@ -1,5 +1,7 @@
 package io;
 
+import utility.UtilityClass;
+
 import java.io.Serializable;
 
 /**
@@ -21,7 +23,7 @@ public class ChecksumMessage implements Serializable{
      */
     public ChecksumMessage(byte[] bytes) {
         this.encodedBytes = bytes;
-        this.checkSum = Parser.computeCheckSum(bytes);
+        this.checkSum = UtilityClass.computeCheckSum(bytes);
     }
 
     /**

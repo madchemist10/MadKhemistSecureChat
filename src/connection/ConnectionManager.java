@@ -18,7 +18,7 @@ public class ConnectionManager {
 
     private static int receivingPort = Constants.DEFAULT_RECEIVING_PORT;
     private static int sendingPort = Constants.DEFAULT_SENDING_PORT;
-    private final String hostName = Constants.DEFAULT_IP_ADDRESS;
+    private static String hostName = Constants.DEFAULT_IP_ADDRESS;
 
     BlockingQueue<byte[]> sendingBytes = new ArrayBlockingQueue<>(10);
 
@@ -42,7 +42,7 @@ public class ConnectionManager {
         try {
             this.receivingSocket = new DatagramSocket(receivingPort);
             this.sendingSocket = new DatagramSocket();
-            this.sendingSocket.connect(InetAddress.getByName(this.hostName),sendingPort);
+            this.sendingSocket.connect(InetAddress.getByName(hostName),sendingPort);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,6 +75,10 @@ public class ConnectionManager {
     public static void setPorts(int receivingPort, int sendingPort){
         ConnectionManager.receivingPort = receivingPort;
         ConnectionManager.sendingPort = sendingPort;
+    }
+
+    public static void setHostName(String hostName){
+        ConnectionManager.hostName = hostName;
     }
 
 }
