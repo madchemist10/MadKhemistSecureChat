@@ -11,4 +11,10 @@ public interface Constants {
 
     /** Encryption mode for encrypt and decrypt actions.*/
     String AES_CBC_PKCS = "AES/CBC/PKCS5Padding";
+
+    /** Size of serialized message object.*/
+    int MESSAGE_OBJ_SIZE = 2048;
+
+    /*Message types*/
+    String DATA_MESSAGE = "DATA_MESSAGE";
 }

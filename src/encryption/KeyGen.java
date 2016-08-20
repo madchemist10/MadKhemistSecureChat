@@ -34,4 +34,13 @@ public class KeyGen {
         random.nextBytes(salt);
         return salt;
     }
+
+    /**
+     * Wrapper for creating an initial value to seed the cipher with.
+     * @return byte[] representation of the generated IV.
+     * @throws Exception if IV creation fails.
+     */
+    public static byte[] generateIV() throws Exception{
+        return generateSalt(16);
+    }
 }
