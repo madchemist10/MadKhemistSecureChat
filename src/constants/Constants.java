@@ -27,6 +27,9 @@ public interface Constants {
     /** Home as default ip address.*/
     String DEFAULT_IP_ADDRESS = "127.0.0.1";
 
+    /**Default encryption key*/
+    String DEFAULT_ENCRYPTION_KEY = "Alpha1234";
+
     /** Maximum time to wait on polling for outgoing data.*/
     int MAX_OUT_POLL_TIME = 500;
 
@@ -35,6 +38,7 @@ public interface Constants {
     String IN_BOUND_PORT_LABEL = "Receive Port >> ";
     String OUT_BOUND_PORT_LABEL = "Send Port >> ";
     String IP_ADDRESS_LABEL = "IP Address >>";
+    String ENCRYPTION_LABEL = "Encryption Key >>";
     String DONE = "Done!";
     int FRAME_WIDTH = 500;
     int FRAME_HEIGHT = 500;

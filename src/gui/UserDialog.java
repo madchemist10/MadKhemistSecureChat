@@ -5,6 +5,9 @@ import io.PayloadMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.ref.WeakReference;
 
 /**
  * User panel to allow user to type messages to
@@ -45,11 +48,13 @@ public class UserDialog extends JPanel{
         userData = new JTextField(20);
         this.add(userData, constraints);
         constraints.gridy++;
+        userData.addActionListener(new UserDataActionListener(this));
     }
 
     private void sendData(){
         PayloadMessage payload = new PayloadMessage(userData.getText(),Constants.DATA_MESSAGE);
         this.frame.getController().frameOutgoingMessage(payload);
+        clearField();
     }
 
     public void addDataToConversation(String newData){
@@ -60,4 +65,18 @@ public class UserDialog extends JPanel{
         userData.setText("");
     }
 
+    private static class UserDataActionListener implements ActionListener{
+        private final WeakReference<UserDialog> wUserDialog;
+        UserDataActionListener(UserDialog userDialog){
+            this.wUserDialog = new WeakReference<>(userDialog);
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            UserDialog userDialog = this.wUserDialog.get();
+            if(userDialog == null){
+                return;
+            }
+            userDialog.sendData();
+        }
+    }
 }

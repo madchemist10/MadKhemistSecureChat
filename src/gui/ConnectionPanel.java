@@ -2,6 +2,7 @@ package gui;
 
 import connection.ConnectionManager;
 import constants.Constants;
+import encryption.KeyGen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class ConnectionPanel extends JPanel{
     private JTextField inBoundPortField;
     private JTextField outBoundPortField;
     private JTextField ipAddressField;
+    private JTextField encryptionKeyField;
 
     /**Assign new values to Connection Manager per user input.*/
     private JButton doneButton;
@@ -39,6 +41,7 @@ public class ConnectionPanel extends JPanel{
         constraints.gridy = 0;
         setUpPortInput();
         setUpIPInput();
+        setUpUserPasswordInput();
         setUpDoneButton();
         setDefaults();
         this.setVisible(true);
@@ -89,7 +92,6 @@ public class ConnectionPanel extends JPanel{
      */
     private void setUpDoneButton(){
         doneButton = new JButton(Constants.DONE);
-        /*Grid X = 0, Grid Y = 3*/
         this.add(doneButton, constraints);
         constraints.gridy++;
         assignDoneListener();
@@ -126,7 +128,8 @@ public class ConnectionPanel extends JPanel{
                 return;
             }
             String ipAddress = connectionPanel.ipAddressField.getText();
-            if(ipAddress.equals("")){
+            String userKey = connectionPanel.encryptionKeyField.getText();
+            if(ipAddress.equals("") || userKey.equals("")){
                 return;
             }
 
@@ -135,13 +138,36 @@ public class ConnectionPanel extends JPanel{
 
             ConnectionManager.setPorts(inBoundPort, outBoundPort);
             ConnectionManager.setHostName(ipAddress);
+            try {
+                connectionPanel.frame.assignController(KeyGen.generateKey(userKey.getBytes()),KeyGen.generateIV());
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
             connectionPanel.frame.showPanel(Constants.USER_PANEL);
         }
     }
 
+    /**
+     * Assign default values to the text fields.
+     */
     private void setDefaults(){
         inBoundPortField.setText(Integer.toString(Constants.DEFAULT_RECEIVING_PORT));
         outBoundPortField.setText(Integer.toString(Constants.DEFAULT_SENDING_PORT));
         ipAddressField.setText(Constants.DEFAULT_IP_ADDRESS);
+        encryptionKeyField.setText(Constants.DEFAULT_ENCRYPTION_KEY);
+    }
+
+    /**
+     * Set up the user password input.
+     */
+    private void setUpUserPasswordInput(){
+        JLabel encryptionLabel = new JLabel(Constants.ENCRYPTION_LABEL);
+        this.add(encryptionLabel, constraints);
+        constraints.gridx++;
+        encryptionKeyField = new JTextField(20);
+        this.add(encryptionKeyField, constraints);
+        constraints.gridy++;
+
+        constraints.gridx = 0;
     }
 }
