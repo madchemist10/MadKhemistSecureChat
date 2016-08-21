@@ -5,6 +5,9 @@ import io.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.lang.ref.WeakReference;
 
 /**
  * Main frame that is top level that contains
@@ -31,6 +34,8 @@ public class MainFrame extends JFrame{
         panel.setVisible(true);
 
         this.add(panel);
+        addWindowClosingAction();
+
         this.setVisible(true);
     }
 
@@ -48,5 +53,25 @@ public class MainFrame extends JFrame{
 
     public UserDialog getUserDialog(){
         return this.userDialog;
+    }
+
+    private void addWindowClosingAction(){
+        this.addWindowListener(new FrameExitAdapter(this));
+    }
+
+    private static class FrameExitAdapter extends WindowAdapter{
+        private final WeakReference<MainFrame> wFrame;
+        FrameExitAdapter(MainFrame frame){
+            this.wFrame = new WeakReference<>(frame);
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e){
+            MainFrame frame = this.wFrame.get();
+            if(frame == null){
+                return;
+            }
+            frame.getController().shutdown();
+        }
     }
 }

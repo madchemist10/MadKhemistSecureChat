@@ -68,6 +68,7 @@ public class Controller {
      */
     public void frameOutgoingMessage(Message message){
         try {
+            displayMessageToUser("\nSent>> "+message.getMessage());
             this.framer.frameMessage(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +88,7 @@ public class Controller {
         String messageType = message.getMessageType();
         switch(messageType){
             case Constants.DATA_MESSAGE:
-                displayMessageToUser(message.getMessage());
+                displayMessageToUser("\nReceived>> "+message.getMessage());
                 break;
         }
     }
@@ -121,7 +122,6 @@ public class Controller {
      * @param message message to show the user.
      */
     public void displayMessageToUser(String message){
-        frame.getUserDialog().addDataToConversation("Received>> "+message);
-        System.out.println("Received>> "+message);
+        frame.getUserDialog().addDataToConversation(message);
     }
 }
